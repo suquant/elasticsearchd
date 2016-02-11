@@ -1,20 +1,21 @@
-FROM alpine:3.2
+FROM alpine:edge
+MAINTAINER George Kutsurua <g.kutsurua@gmail.com>
 
-ENV JAVA_VERSION=7.79.2.5.6-r0 \
-    ELASTICSEARCH_VERSION=1.7.4 \
+ENV JAVA_VERSION=7.91.2.6.3-r1 \
+    ELASTICSEARCH_VERSION=1.7.5 \
     ES_CLUSTER=elasticsearch \
     ES_HEAP_SIZE=1g \
     ES_MAX_OPEN_FILES=65536 \
     ES_STORE_TYPE=niofs
 
-# install common packages
-RUN apk update && \
-    apk add curl openjdk7-jre-base=$JAVA_VERSION && \
+RUN apk update && apk upgrade &&\
+    apk add curl openjdk7-jre-base=$JAVA_VERSION &&\
     curl -sSLO "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz" &&\
-    tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz && \
-    rm -rf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz && \
-    mv elasticsearch-${ELASTICSEARCH_VERSION} /elasticsearch && \
-    /elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+    tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
+    rm -rf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
+    mv elasticsearch-${ELASTICSEARCH_VERSION} /elasticsearch &&\
+    /elasticsearch/bin/plugin -i elasticsearch/marvel/latest &&\
+    rm -rf /var/cache/apk/*
 
 VOLUME ["/data"]
 
