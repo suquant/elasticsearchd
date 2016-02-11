@@ -1,13 +1,6 @@
 FROM alpine:edge
 MAINTAINER George Kutsurua <g.kutsurua@gmail.com>
 
-ENV JAVA_VERSION=7.91.2.6.3-r1 \
-    ELASTICSEARCH_VERSION=1.7.5 \
-    ES_CLUSTER=elasticsearch \
-    ES_HEAP_SIZE=1g \
-    ES_MAX_OPEN_FILES=65536 \
-    ES_STORE_TYPE=niofs
-
 RUN apk update && apk upgrade &&\
     apk add curl openjdk7-jre-base=$JAVA_VERSION &&\
     curl -sSLO "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz" &&\
@@ -17,9 +10,16 @@ RUN apk update && apk upgrade &&\
     /elasticsearch/bin/plugin -i elasticsearch/marvel/latest &&\
     rm -rf /var/cache/apk/*
 
-VOLUME ["/data"]
+ENV JAVA_VERSION=7.91.2.6.3-r1 \
+    ELASTICSEARCH_VERSION=1.7.5 \
+    ES_CLUSTER=elasticsearch \
+    ES_HEAP_SIZE=1g \
+    ES_MAX_OPEN_FILES=65536 \
+    ES_STORE_TYPE=niofs
 
-EXPOSE 9200 9300
+VOLUME ["/data"]
 
 ENTRYPOINT ["/elasticsearch/bin/elasticsearch"]
 CMD ""
+
+EXPOSE 9200 9300
