@@ -8,6 +8,7 @@ RUN apk update && apk upgrade &&\
     rm -rf elasticsearch-1.7.5.tar.gz &&\
     mv elasticsearch-1.7.5 /elasticsearch &&\
     /elasticsearch/bin/plugin -i elasticsearch/marvel/latest &&\
+    /elasticsearch/bin/plugin -i io.fabric8/elasticsearch-cloud-kubernetes/2.3.3 &&\
     rm -rf /var/cache/apk/*
 
 ENV ES_CLUSTER=elasticsearch ES_HEAP_SIZE=1g \
