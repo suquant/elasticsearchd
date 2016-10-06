@@ -1,13 +1,14 @@
 FROM alpine:edge
 MAINTAINER George Kutsurua <g.kutsurua@gmail.com>
 
+ENV ELASTICSEARCH_VERSION=1.7.5
+
 RUN apk update && apk upgrade &&\
     apk add curl openjdk7-jre-base &&\
-    curl -sSLO "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz" &&\
-    tar -xzf elasticsearch-1.7.5.tar.gz &&\
-    rm -rf elasticsearch-1.7.5.tar.gz &&\
-    mv elasticsearch-1.7.5 /elasticsearch &&\
-    /elasticsearch/bin/plugin -i elasticsearch/marvel/latest &&\
+    curl -sSLO "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz" &&\
+    tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
+    rm -rf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
+    mv elasticsearch-${ELASTICSEARCH_VERSION} /elasticsearch &&\
     /elasticsearch/bin/plugin -i io.fabric8/elasticsearch-cloud-kubernetes/1.3.0 &&\
     rm -rf /var/cache/apk/*
 
