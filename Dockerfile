@@ -9,7 +9,6 @@ RUN apk update && apk upgrade &&\
     tar -xzf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
     rm -rf elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz &&\
     mv elasticsearch-${ELASTICSEARCH_VERSION} /elasticsearch &&\
-    /elasticsearch/bin/plugin -i io.fabric8/elasticsearch-cloud-kubernetes/1.3.0 &&\
     rm -rf /var/cache/apk/*
 
 ENV ES_CLUSTER=elasticsearch ES_HEAP_SIZE=1g \
